@@ -1,0 +1,84 @@
+{% extends 'admin/base_site.html' %}
+
+{% block content %}
+<h1 style="text-align:center; font-size:50px; font-weight:bold">THỐNG KÊ BÁO CÁO</h1>
+<br>
+<h2>Số sản phẩm: {{ product_count }}</h2>
+<hr>
+<br>
+<div>
+    <table>
+        <tr>
+            <td>
+                <table style="width:500px; margin-right: 100px; margin-left: 100px">
+                    <tr>
+                        <td>Tên sản phẩm</td>
+                        <td>Số lượng</td>
+                    </tr>
+                    {% for s in stats %}
+                    <tr>
+                        <td><strong>{{ s.name }} có: </strong></td>
+                        <td>{{ s.product_cou }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </td>
+            <td>
+                <div style="width:500px">
+                    <canvas id="MyChart"></canvas>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    let label = []
+    let data = []
+    let colors = []
+    let borderColors = []
+    let r, g, b;
+
+    {% for s in stats %}
+        label.push('{{ s.name }}')
+        data.push({{s.product_cou}})
+
+        r = parseInt(Math.random() * 255)
+        g = parseInt(Math.random() * 255)
+        b = parseInt(Math.random() * 255)
+
+        colors.push(`rgba(${r}, ${g}, ${b}, 0.2)`)
+        borderColors.push(`rgba(${r}, ${g}, ${b}, 1)`)
+    {% endfor %}
+
+    window.onload = function(){
+        const ctx = document.getElementById('MyChart').getContext('2d');
+        loadChart(ctx, label, data, 'bar', colors, borderColors);
+    }
+
+    function loadChart(ctx, label, data, type, colors, borderColors) {
+    const myChart = new Chart(ctx, {
+        type: type,
+        data: {
+            labels: label,
+            datasets: [{
+                label: 'Thống kê số lượng sản phẩm theo danh mục',
+                data: data,
+                backgroundColor: colors,
+                borderColor: borderColors,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+</script>
+{% endblock %}
