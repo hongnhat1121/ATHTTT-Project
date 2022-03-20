@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -30,6 +29,7 @@ ALLOWED_HOSTS = []
 ALLOWED_ORIGINS = ['*']
 
 CORS_ORIGIN_ALLOW_ALL = True
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'saleapp.apps.SaleappConfig',
     'rest_framework',
     'drf_yasg',
-    'corsheaders'
+    'corsheaders',
+    'ckeditor',
+    'ckeditor_uploader'
 ]
 
 MIDDLEWARE = [
@@ -75,7 +77,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'saleMobile.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -121,13 +122,14 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
-MEDIA_ROOT = '%s/uploads/static/' % BASE_DIR
-CKEDITOR_UPLOAD_PATH = 'lessons'
+
+STATIC_URL = '/static/'
+MEDIA_ROOT = '%s/saleapp/static/' % BASE_DIR
+CKEDITOR_UPLOAD_PATH = "products/"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
